@@ -1,0 +1,83 @@
+name: flutter_modular_clean_demo
+description: "flutter_modular_clean_demo"
+workspace:
+  - packages/infrastructure/network
+  - packages/infrastructure/event_bus
+  - packages/infrastructure/storage
+
+  - packages/features/home
+  - packages/features/profile
+  - packages/features/auth
+  - packages/features/app_shell
+
+  - packages/shared/assets
+  - packages/shared/config
+  - packages/shared/core
+  - packages/shared/session
+  - packages/shared/design_system
+  - packages/shared/theming
+
+  - app/root
+
+environment:
+  sdk: ^3.9.2
+
+dev_dependencies:
+  melos: ^7.1.1
+
+melos:
+  categories:
+    features:
+      - packages/features/*
+    infrastructure:
+      - packages/infrastructure/*
+    shared:
+      - packages/shared/*
+  command:
+    bootstrap:
+      # It seems so that running "pub get" in parallel has some issues (like
+      # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
+      # makes the CI much more stable.
+      runPubGetInParallel: false
+  scripts:
+    codegen:
+      run: |
+        melos exec --fail-fast -- \
+          "dart run build_runner build --delete-conflicting-outputs"
+      description: Run code generation for all packages.
+      packageFilters:
+        dependsOn:
+          - build_runner
+        dirExists:
+          - lib
+    codegen:watch:
+      run: |
+        melos exec --fail-fast -- \
+          "dart run build_runner watch --delete-conflicting-outputs"
+      description: Run code generation in watch mode for all packages.
+      packageFilters:
+        dependsOn:
+          - build_runner
+        dirExists:
+          - lib
+    codegen:all:
+      run: melos run codegen --no-select
+      description: Run code generation for all packages with no selection.
+    add:devs:
+      run: melos run dev_dependencies && melos bs
+
+    dev_dependencies:
+      run: |
+        melos exec --category="features" --fail-fast -- \
+          "flutter pub add -d build_runner freezed json_serializable injectable_generator auto_route_generator"
+      description: Run `flutter pub get` for all packages.
+    test:
+      run: |
+        melos exec --fail-fast -- \
+          "flutter test"
+      description: Run `flutter test` for a specific package.
+      packageFilters:
+        dirExists:
+          - test
+        ignore:
+          - '*example*'

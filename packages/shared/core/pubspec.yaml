@@ -1,0 +1,36 @@
+name: core
+description: "A new Flutter package project."
+version: 0.0.1
+resolution: workspace
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Route management
+  auto_route: ^10.1.2
+
+  # Dependency Injection
+  get_it: ^8.2.0
+  injectable: ^2.5.2
+
+  # Functional Programming
+  dartz: ^0.10.1
+  json_annotation: ^4.9.0
+  freezed_annotation: ^3.1.0
+
+  # Equatable for value comparison
+  equatable: ^2.0.7
+
+  # State Management
+  flutter_bloc: ^9.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.7.1

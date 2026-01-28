@@ -1,0 +1,31 @@
+name: config
+description: "Environment configuration package using envied for type-safe environment variable management."
+version: 0.0.1
+resolution: workspace
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Environment Configuration
+  envied: ^1.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+  # Code Generation
+  build_runner: any
+  envied_generator: ^1.3.1
+
+flutter:
+
+  assets:
+    - .env.dev
+    - .env.staging
+    - .env.prod

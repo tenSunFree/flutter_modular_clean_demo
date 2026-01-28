@@ -1,0 +1,49 @@
+import 'package:app_shell/app_shell.dart';
+import 'package:auth/auth.dart';
+import 'package:core/core.dart';
+import 'package:design_system/design_system.dart';
+import 'package:flutter/material.dart';
+import 'package:root/core/di/injection_container.dart';
+import 'package:root/core/route/app_router.dart';
+import 'package:session/session.dart';
+import 'package:storage/storage.dart';
+import 'package:theming/theming.dart';
+
+final appRouter = AppRouter();
+
+Future<void> main() async {
+  debugPrint('main');
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
+  await StorageService.I.initialize();
+  runApp(const MainApp());
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint('MainApp, build');
+    // di<AuthBloc>().toString();
+    debugPrint('MainApp, build2');
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => di<AuthBloc>(), lazy: false),
+        BlocProvider(create: (context) => di<AppBloc>()),
+        BlocProvider(create: (context) => di<SessionBloc>()),
+      ],
+      child: ValueListenableBuilder(
+        valueListenable: di<ThemeManager>().currentThemeMode,
+        builder: (context, themeMode, child) {
+          return MaterialApp.router(
+            routerConfig: appRouter.config(),
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Modular Clean Architecture',
+            theme: themeMode == ThemeMode.dark ? AppTheme.dark : AppTheme.light,
+          );
+        },
+      ),
+    );
+  }
+}

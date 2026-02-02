@@ -32,6 +32,12 @@ Preparing...
   Layered software design (Independent domain logic, high testability, and strict separation of concerns)    
 - Melos  
   Enterprise-grade monorepo management (Automated bootstrapping, cross-package script execution, and versioning)  
+- Freezed  
+  Robust Data Modeling & Immutability (Automated copyWith, union types for state handling, and compile-time data safety)    
+- BLoC  
+  Predictable State Management (Unidirectional data flow, strict separation of UI from business logic, and event-driven architecture)    
+- Get_it  
+  Centralized Service Locator (Decoupled component lifecycles, global instance management, and highly testable dependency access)  
 
 ---
 

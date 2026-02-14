@@ -9,7 +9,8 @@ import 'package:root/core/route/app_routes.dart';
 class AppRouter extends RootStackRouter {
   @override
   final List<AutoRoute> routes = [
-    AutoRoute(path: AppRoutes.auth.login, page: LoginRoute.page, initial: true),
+    // AutoRoute(path: AppRoutes.auth.login, page: LoginRoute.page, initial: true),
+    ...AuthRoutesModule.routes,
     AutoRoute(
       path: AppRoutes.app.appShell,
       page: AppRoute.page,

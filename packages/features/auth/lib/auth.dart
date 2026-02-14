@@ -7,6 +7,7 @@ export 'src/core/errors/failures.dart';
 // Core - Routers
 export 'src/core/route/auth_router.gr.dart';
 export 'src/core/route/auth_routes.dart';
+export 'src/core/route/auth_routes_module.dart';
 export 'src/feature/domain/entities/auth_token_entity.dart';
 // Domain - Entities
 export 'src/feature/domain/entities/user_entity.dart';
@@ -22,3 +23,4 @@ export 'src/feature/domain/usecases/register_usecase.dart';
 export 'src/feature/presentation/bloc/auth_bloc.dart';
 // Presentation - Pages
 export 'src/feature/presentation/pages/login_page.dart';
+export 'src/feature/presentation/pages/forgot_password_page.dart';

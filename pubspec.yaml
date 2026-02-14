@@ -40,10 +40,20 @@ melos:
       # makes the CI much more stable.
       runPubGetInParallel: false
   scripts:
+    # Clean build_runner cache
+    codegen:clean:
+      run: |
+        melos exec --concurrency=1 --ignore="design_system" -- \
+          "dart run build_runner clean"
+      description: "Clean build_runner cache for all packages (excluding design_system)"
+    # --concurrency=1: Run sequentially to reduce peak memory usage (avoid OOM) and
+    # minimize IO contention / occasional race conditions in CI or Windows.
+    # --ignore="design_system": Explicitly skip this package to avoid scanning/executing
+    # codegen there (and to prevent accidental inclusion if its dependencies change later).
     codegen:
       run: |
-        melos exec --fail-fast -- \
-          "dart run build_runner build --delete-conflicting-outputs"
+        melos exec --concurrency=1 --ignore="design_system" --fail-fast -- \
+                  "dart run build_runner build --delete-conflicting-outputs"
       description: Run code generation for all packages.
       packageFilters:
         dependsOn:
@@ -60,6 +70,11 @@ melos:
           - build_runner
         dirExists:
           - lib
+    # Clear build_runner cache first, then run code generation
+    codegen:reset:
+      run: |
+        melos run codegen:clean && melos run codegen
+      description: "Reset project: clean build_runner cache and run full code generation"
     codegen:all:
       run: melos run codegen --no-select
       description: Run code generation for all packages with no selection.

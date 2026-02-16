@@ -40,6 +40,8 @@ dependencies:
     path: ../../packages/shared/design_system
   theming:
     path: ../../packages/shared/theming
+  analytics:
+    path: ../../packages/shared/analytics
 
 dev_dependencies:
   flutter_test:

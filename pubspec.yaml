@@ -75,17 +75,34 @@ melos:
       run: |
         melos run codegen:clean && melos run codegen
       description: "Reset project: clean build_runner cache and run full code generation"
+    # Full project deep reset (including dependency sync and Codegen)
+    project:reset:
+      run: |
+        melos bootstrap && melos run codegen:reset
+      description: "Full project reset: Bootstrap dependencies and rebuild all generated code."
     codegen:all:
       run: melos run codegen --no-select
       description: Run code generation for all packages with no selection.
     add:devs:
       run: melos run dev_dependencies && melos bs
 
-    dev_dependencies:
-      run: |
-        melos exec --category="features" --fail-fast -- \
-          "flutter pub add -d build_runner freezed json_serializable injectable_generator auto_route_generator"
-      description: Run `flutter pub get` for all packages.
+      # dev_dependencies:
+      #   run: |
+      #     melos exec --category="features" --fail-fast -- \
+      #       "flutter pub add -d build_runner freezed json_serializable injectable_generator auto_route_generator"
+      #   description: Run `flutter pub get` for all packages.\
+      # Install common code generation tools for feature packages
+      setup:feature-deps:
+        run: |
+          melos exec --category="features" --fail-fast -- \
+            "flutter pub add -d build_runner freezed json_serializable injectable_generator auto_route_generator"
+        description: "Install common code generation dependencies to all feature packages."
+      # Combined command: automatically bootstrap and link packages after installation
+      project:init-features:
+        run: |
+          melos run setup:feature-deps && melos bs
+        description: "One-stop setup for feature packages and bootstrap."
+
     test:
       run: |
         melos exec --fail-fast -- \

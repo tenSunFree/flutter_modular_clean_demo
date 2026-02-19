@@ -8,15 +8,34 @@ import 'package:root/core/route/app_router.dart';
 import 'package:session/session.dart';
 import 'package:storage/storage.dart';
 import 'package:theming/theming.dart';
+import 'package:analytics/analytics.dart';
 
 final appRouter = AppRouter();
 
 Future<void> main() async {
-  debugPrint('main');
+  debugPrint('[App] Starting engine...');
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   await StorageService.I.initialize();
+  debugPrint('[App] Storage initialized.');
+  // _reportAppStart();
   runApp(const MainApp());
+}
+
+/// Handles analytics logging when the app starts
+void _reportAppStart() {
+  try {
+    final analytics = di<IAnalyticsService>();
+    analytics.logEvent('app_start');
+    debugPrint('[Analytics] App start event logged.');
+  } catch (e, s) {
+    debugPrint('[Analytics] Failed to log event: $e');
+    // Only print the stack trace in Debug mode
+    assert(() {
+      debugPrint('StackTrace: \n$s');
+      return true;
+    }());
+  }
 }
 
 class MainApp extends StatelessWidget {
@@ -24,9 +43,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('MainApp, build');
-    // di<AuthBloc>().toString();
-    debugPrint('MainApp, build2');
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => di<AuthBloc>(), lazy: false),

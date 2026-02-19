@@ -10,6 +10,7 @@ workspace:
   - packages/features/auth
   - packages/features/app_shell
 
+  - packages/shared/analytics
   - packages/shared/assets
   - packages/shared/config
   - packages/shared/core

@@ -1,12 +1,11 @@
 name: analytics
 description: Shared analytics micro-package for event logging.
-version: 0.0.1
+version: 1.0.0
 publish_to: 'none'
 resolution: workspace
 
 environment:
   sdk: ^3.9.2
-  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
@@ -19,6 +18,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # Code Generation
+  build_runner: any
 
   # DI Generator
   injectable_generator: any

@@ -18,7 +18,7 @@ Future<void> main() async {
   await configureDependencies();
   await StorageService.I.initialize();
   debugPrint('[App] Storage initialized.');
-  // _reportAppStart();
+  _reportAppStart();
   runApp(const MainApp());
 }
 

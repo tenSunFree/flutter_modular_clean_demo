@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:analytics/analytics.dart' as _i548;
 import 'package:app_shell/app_shell.dart' as _i671;
 import 'package:auth/auth.dart' as _i662;
 import 'package:get_it/get_it.dart' as _i174;
@@ -35,6 +36,7 @@ extension GetItInjectableX on _i174.GetIt {
     await _i1024.HomePackageModule().init(gh);
     await _i16.ProfilePackageModule().init(gh);
     await _i671.AppShellPackageModule().init(gh);
+    await _i548.AnalyticsPackageModule().init(gh);
     final injectionModule = _$InjectionModule();
     gh.singleton<_i372.NetworkInfo>(() => injectionModule.networkInfo);
     gh.singleton<_i332.AppEventListener>(() => _i332.AppEventListener());

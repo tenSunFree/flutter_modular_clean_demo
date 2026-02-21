@@ -51,16 +51,14 @@ melos:
     # minimize IO contention / occasional race conditions in CI or Windows.
     # --ignore="design_system": Explicitly skip this package to avoid scanning/executing
     # codegen there (and to prevent accidental inclusion if its dependencies change later).
+    # Step 1: Process child packages first (exclude root and design_system, using inline filters to ensure only packages with build_runner run) to generate base modules
+    # Step 2: After those finish, run root explicitly (no filters) to aggregate the results
+    # Adding --concurrency=1 helps avoid file lock issues on Windows
     codegen:
-      run: |
-        melos exec --concurrency=1 --ignore="design_system" --fail-fast -- \
-                  "dart run build_runner build --delete-conflicting-outputs"
+      run: >
+        melos exec --concurrency=1 --ignore="root,design_system" --depends-on="build_runner" --fail-fast -- "dart run build_runner build --delete-conflicting-outputs" &&
+        melos exec --concurrency=1 --scope="root" -- "dart run build_runner build --delete-conflicting-outputs"
       description: Run code generation for all packages.
-      packageFilters:
-        dependsOn:
-          - build_runner
-        dirExists:
-          - lib
     codegen:watch:
       run: |
         melos exec --fail-fast -- \

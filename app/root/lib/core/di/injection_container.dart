@@ -6,6 +6,7 @@ import 'package:profile/profile.dart';
 import 'package:root/core/di/injection_container.config.dart';
 import 'package:session/session.dart';
 import 'package:theming/theming.dart';
+import 'package:analytics/analytics.dart';
 
 final GetIt getIt = GetIt.I;
 
@@ -19,6 +20,7 @@ final GetIt getIt = GetIt.I;
     ExternalModule(HomePackageModule),
     ExternalModule(ProfilePackageModule),
     ExternalModule(AppShellPackageModule),
+    ExternalModule(AnalyticsPackageModule),
     // Other external modules
     // ...
   ],

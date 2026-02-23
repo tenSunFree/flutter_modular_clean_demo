@@ -17,6 +17,7 @@ workspace:
   - packages/shared/session
   - packages/shared/design_system
   - packages/shared/theming
+  - packages/shared/infrastructure
 
   - app/root
 

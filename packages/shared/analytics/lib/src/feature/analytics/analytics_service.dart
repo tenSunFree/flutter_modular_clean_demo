@@ -7,7 +7,7 @@ class AnalyticsService implements IAnalyticsService {
 
   @override
   Future<void> logEvent(String name, [Map<String, dynamic>? params]) async {
-    // TODO: Replace with actual reporting (Firebase / Segment / HTTP)
+    // TODO: Replace with actual reporting (Firebase / Segment / HTTP / mock)
     // For now, use print to guarantee behavior
     final payload = params ?? {};
     // Use platform logger or your existing logging service

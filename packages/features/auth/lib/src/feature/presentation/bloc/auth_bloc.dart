@@ -1,7 +1,7 @@
 import 'package:core/core.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:session/session.dart';
-
+import 'package:analytics/analytics.dart';
 import '../../domain/entities/auth_token_entity.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/usecases/check_auth_status_usecase.dart';
@@ -11,7 +11,9 @@ import '../../domain/usecases/logout_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
 
 part 'auth_bloc.freezed.dart';
+
 part 'auth_event.dart';
+
 part 'auth_state.dart';
 
 /// Authentication BLoC
@@ -24,6 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LogoutUseCase logoutUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
   final CheckAuthStatusUseCase checkAuthStatusUseCase;
+  final IAnalyticsService _analyticsService;
 
   AuthBloc({
     required this.loginUseCase,
@@ -31,7 +34,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.logoutUseCase,
     required this.getCurrentUserUseCase,
     required this.checkAuthStatusUseCase,
-  }) : super(const AuthState.initial()) {
+    required IAnalyticsService analyticsService,
+  }) : _analyticsService = analyticsService,
+       super(const AuthState.initial()) {
     on<AuthEventLogin>(_onLogin);
     on<AuthEventRegister>(_onRegister);
     on<AuthEventLogout>(_onLogout);
@@ -41,26 +46,39 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onLogin(AuthEventLogin event, Emitter<AuthState> emit) async {
     emit(const AuthState.loading());
-
     final result = await loginUseCase(
       LoginParams(email: event.email, password: event.password),
     );
-
-    result.fold((failure) => emit(AuthState.error(failure.message)), (token) {
-      di<SessionBloc>().add(
-        SessionEvent.login(
-          user: UserSession(id: "1", email: "email", name: "name"),
-          accessToken: token.accessToken,
-        ),
-      );
-      // Orchestrator decides where to navigate
-      EventBus.I.publish(
-        const AuthenticationSuccessEvent(
-          isFirstLogin: false, // TODO: Determine from token or user data
-        ),
-      );
-      emit(AuthState.authenticated(token));
-    });
+    result.fold(
+      (failure) {
+        // Log login failure event
+        _analyticsService.logEvent('login_failure', {
+          'reason': failure.message,
+          'email': event.email,
+        });
+        emit(AuthState.error(failure.message));
+      },
+      (token) {
+        // Log login success event
+        _analyticsService.logEvent('login_success', {
+          // In real implementation this should be retrieved from the token or user data
+          'user_id': '1',
+        });
+        di<SessionBloc>().add(
+          SessionEvent.login(
+            user: UserSession(id: "1", email: "email", name: "name"),
+            accessToken: token.accessToken,
+          ),
+        );
+        // Orchestrator decides where to navigate
+        EventBus.I.publish(
+          const AuthenticationSuccessEvent(
+            isFirstLogin: false, // TODO: Determine from token or user data
+          ),
+        );
+        emit(AuthState.authenticated(token));
+      },
+    );
   }
 
   Future<void> _onRegister(
@@ -93,10 +111,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onLogout(AuthEventLogout event, Emitter<AuthState> emit) async {
     emit(const AuthState.loading());
-
     final result = await logoutUseCase(const NoParams());
-
     result.fold((failure) => emit(AuthState.error(failure.message)), (_) {
+      // Log logout event
+      _analyticsService.logEvent('user_logout');
       // Feature says: "logout successful"
       // Orchestrator decides where to navigate (clear data, go to login, etc.)
       EventBus.I.publish(const LogoutSuccessEvent(reason: 'user_initiated'));

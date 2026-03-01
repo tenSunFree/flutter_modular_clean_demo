@@ -12,6 +12,7 @@
 import 'package:analytics/analytics.dart' as _i548;
 import 'package:app_shell/app_shell.dart' as _i671;
 import 'package:auth/auth.dart' as _i662;
+import 'package:firebase/firebase.dart' as _i522;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:home/home.dart' as _i1024;
 import 'package:injectable/injectable.dart' as _i526;
@@ -37,6 +38,7 @@ extension GetItInjectableX on _i174.GetIt {
     await _i16.ProfilePackageModule().init(gh);
     await _i671.AppShellPackageModule().init(gh);
     await _i548.AnalyticsPackageModule().init(gh);
+    await _i522.FirebasePackageModule().init(gh);
     final injectionModule = _$InjectionModule();
     gh.singleton<_i372.NetworkInfo>(() => injectionModule.networkInfo);
     gh.singleton<_i332.AppEventListener>(() => _i332.AppEventListener());

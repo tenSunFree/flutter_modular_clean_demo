@@ -4,6 +4,7 @@ workspace:
   - packages/infrastructure/network
   - packages/infrastructure/event_bus
   - packages/infrastructure/storage
+  - packages/infrastructure/firebase
 
   - packages/features/home
   - packages/features/profile
@@ -17,7 +18,6 @@ workspace:
   - packages/shared/session
   - packages/shared/design_system
   - packages/shared/theming
-  - packages/shared/infrastructure
 
   - app/root
 

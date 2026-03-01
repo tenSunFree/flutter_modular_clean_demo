@@ -30,6 +30,8 @@ dependencies:
     path: ../../packages/infrastructure/event_bus
   network:
     path: ../../packages/infrastructure/network
+  firebase:
+    path: ../../packages/infrastructure/firebase
 
   ## Shared
   core:
@@ -42,8 +44,6 @@ dependencies:
     path: ../../packages/shared/theming
   analytics:
     path: ../../packages/shared/analytics
-  infrastructure:
-    path: ../../packages/shared/infrastructure
 
 dev_dependencies:
   flutter_test:

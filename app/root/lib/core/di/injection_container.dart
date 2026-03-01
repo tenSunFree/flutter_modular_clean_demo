@@ -7,6 +7,7 @@ import 'package:root/core/di/injection_container.config.dart';
 import 'package:session/session.dart';
 import 'package:theming/theming.dart';
 import 'package:analytics/analytics.dart';
+import 'package:firebase/firebase.dart';
 
 final GetIt getIt = GetIt.I;
 
@@ -21,6 +22,7 @@ final GetIt getIt = GetIt.I;
     ExternalModule(ProfilePackageModule),
     ExternalModule(AppShellPackageModule),
     ExternalModule(AnalyticsPackageModule),
+    ExternalModule(FirebasePackageModule),
     // Other external modules
     // ...
   ],

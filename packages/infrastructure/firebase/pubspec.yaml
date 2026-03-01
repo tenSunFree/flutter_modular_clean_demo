@@ -1,23 +1,27 @@
-name: infrastructure
-description: Shared infrastructure micro-package for common features.
+name: firebase
+description: Firebase integrations for the infrastructure layer.
 version: 1.0.0
 publish_to: 'none'
 resolution: workspace
 
 environment:
   sdk: ^3.9.2
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  ## Shared
-  core:
-    path: ../core
+  analytics:
+    path: ../../shared/analytics
+
+  firebase_analytics: ^12.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^5.0.0
+  mocktail: ^1.0.4
 
   # Code Generation
   build_runner: any

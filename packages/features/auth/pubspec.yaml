@@ -22,6 +22,8 @@ dependencies:
     path: ../../shared/session
   design_system:
     path: ../../shared/design_system
+  analytics:
+    path: ../../shared/analytics
 
   ## Infrastructure
   storage:

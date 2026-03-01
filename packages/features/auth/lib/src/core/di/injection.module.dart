@@ -6,6 +6,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i687;
 
+import 'package:analytics/analytics.dart' as _i548;
 import 'package:auth/auth.dart' as _i662;
 import 'package:auth/src/feature/data/datasources/auth_local_datasource.dart'
     as _i166;
@@ -58,6 +59,7 @@ class AuthPackageModule extends _i526.MicroPackageModule {
           logoutUseCase: gh<_i886.LogoutUseCase>(),
           getCurrentUserUseCase: gh<_i963.GetCurrentUserUseCase>(),
           checkAuthStatusUseCase: gh<_i862.CheckAuthStatusUseCase>(),
+          analyticsService: gh<_i548.IAnalyticsService>(),
         ));
   }
 }

@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:analytics/analytics.dart';
 
 // Use the Environment annotation to easily switch between dev and prod
-@Injectable(as: IAnalyticsService, env: ['prod', 'staging'])
+@Injectable(as: IAnalyticsService, env: ['prod', 'staging', 'dev'])
 class FirebaseAnalyticsService implements IAnalyticsService {
   final FirebaseAnalytics _analytics;
 

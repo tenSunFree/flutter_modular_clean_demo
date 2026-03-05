@@ -30,5 +30,5 @@ final GetIt getIt = GetIt.I;
 Future<void> configureDependencies() async {
   // The generated extension will be updated according to your config file
   // will execute the registration logic of all Modules above in order
-  getIt.init();
+  await getIt.init(environment: 'dev'); // or 'prod' / 'staging'
 }

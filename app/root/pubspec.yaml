@@ -32,6 +32,7 @@ dependencies:
     path: ../../packages/infrastructure/network
   firebase:
     path: ../../packages/infrastructure/firebase
+  firebase_core: 4.4.0
 
   ## Shared
   core:

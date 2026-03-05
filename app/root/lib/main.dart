@@ -2,6 +2,7 @@ import 'package:app_shell/app_shell.dart';
 import 'package:auth/auth.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:root/core/di/injection_container.dart';
 import 'package:root/core/route/app_router.dart';
@@ -15,6 +16,10 @@ final appRouter = AppRouter();
 Future<void> main() async {
   debugPrint('[App] Starting engine...');
   WidgetsFlutterBinding.ensureInitialized();
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    // options: DefaultFirebaseOptions.currentPlatform,
+  );
   await configureDependencies();
   await StorageService.I.initialize();
   debugPrint('[App] Storage initialized.');

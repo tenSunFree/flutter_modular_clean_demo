@@ -23,15 +23,15 @@ Future<void> main() async {
   await configureDependencies();
   await StorageService.I.initialize();
   debugPrint('[App] Storage initialized.');
-  _reportAppStart();
+  await _reportAppStart();
   runApp(const MainApp());
 }
 
 /// Handles analytics logging when the app starts
-void _reportAppStart() {
+Future<void> _reportAppStart() async {
   try {
     final analytics = di<IAnalyticsService>();
-    analytics.logEvent('app_start');
+    await analytics.log(AppStartEvent());
     debugPrint('[Analytics] App start event logged.');
   } catch (e, s) {
     debugPrint('[Analytics] Failed to log event: $e');

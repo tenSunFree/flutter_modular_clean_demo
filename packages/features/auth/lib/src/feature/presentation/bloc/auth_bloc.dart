@@ -52,18 +52,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       (failure) {
         // Log login failure event
-        _analyticsService.logEvent('login_failure', {
-          'reason': failure.message,
-          'email': event.email,
-        });
+        _analyticsService.log(
+          LoginFailureEvent(reason: failure.message, email: event.email),
+        );
         emit(AuthState.error(failure.message));
       },
-      (token) {
+      (token) async {
         // Log login success event
-        _analyticsService.logEvent('login_success', {
-          // In real implementation this should be retrieved from the token or user data
-          'user_id': '1',
-        });
+        await _analyticsService.log(LoginSuccessEvent(userId: '1'));
         di<SessionBloc>().add(
           SessionEvent.login(
             user: UserSession(id: "1", email: "email", name: "name"),
@@ -112,9 +108,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogout(AuthEventLogout event, Emitter<AuthState> emit) async {
     emit(const AuthState.loading());
     final result = await logoutUseCase(const NoParams());
-    result.fold((failure) => emit(AuthState.error(failure.message)), (_) {
+    result.fold((failure) => emit(AuthState.error(failure.message)), (_) async {
       // Log logout event
-      _analyticsService.logEvent('user_logout');
+      await _analyticsService.log(LogoutEvent(reason: 'user_initiated'));
+      await _analyticsService.reset();
       // Feature says: "logout successful"
       // Orchestrator decides where to navigate (clear data, go to login, etc.)
       EventBus.I.publish(const LogoutSuccessEvent(reason: 'user_initiated'));

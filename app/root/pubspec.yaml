@@ -32,6 +32,8 @@ dependencies:
     path: ../../packages/infrastructure/network
   firebase:
     path: ../../packages/infrastructure/firebase
+  speed_test:
+    path: ../../packages/infrastructure/speed_test
   firebase_core: 4.4.0
 
   ## Shared

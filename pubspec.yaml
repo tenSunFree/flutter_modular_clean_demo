@@ -5,6 +5,7 @@ workspace:
   - packages/infrastructure/event_bus
   - packages/infrastructure/storage
   - packages/infrastructure/firebase
+  - packages/infrastructure/speed_test
 
   - packages/features/home
   - packages/features/profile

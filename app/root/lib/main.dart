@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:app_shell/app_shell.dart';
 import 'package:auth/auth.dart';
 import 'package:core/core.dart';
@@ -24,7 +25,26 @@ Future<void> main() async {
   await StorageService.I.initialize();
   debugPrint('[App] Storage initialized.');
   await _reportAppStart();
+
+  /// Executes in the background and does not block runApp.
+  _runBackgroundSpeedTest();
   runApp(const MainApp());
+}
+
+void _runBackgroundSpeedTest() async {
+  debugPrint('[SpeedTest] Starting background speed test task');
+  final repository = di<ISpeedTestRepository>();
+  const domains = ['a.com', 'b.com', 'c.com'];
+  try {
+    await repository.measureAndStore(domains);
+    debugPrint(
+      '[SpeedTest] Completed! Results: ${repository.getCachedResultsJson()}',
+    );
+  } catch (e) {
+    debugPrint('[SpeedTest] Failed: $e');
+  }
+
+  /// If repository is a lazySingleton, usually no manual dispose is needed
 }
 
 /// Handles analytics logging when the app starts

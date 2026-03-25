@@ -6,7 +6,8 @@ export 'package:freezed_annotation/freezed_annotation.dart';
 export 'package:get_it/get_it.dart';
 export 'package:injectable/injectable.dart' hide Order;
 export 'package:json_annotation/json_annotation.dart';
-
 export 'src/base/failure.dart';
 export 'src/base/usecase.dart';
 export 'src/di/di_helper.dart';
+export 'src/speed_test/entities/speed_test_result.dart';
+export 'src/speed_test/repositories/i_speed_test_repository.dart';

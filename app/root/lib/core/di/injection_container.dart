@@ -8,6 +8,7 @@ import 'package:session/session.dart';
 import 'package:theming/theming.dart';
 import 'package:analytics/analytics.dart';
 import 'package:firebase/firebase.dart';
+import 'package:speed_test/speed_test.dart';
 
 final GetIt getIt = GetIt.I;
 
@@ -23,6 +24,7 @@ final GetIt getIt = GetIt.I;
     ExternalModule(AppShellPackageModule),
     ExternalModule(AnalyticsPackageModule),
     ExternalModule(FirebasePackageModule),
+    ExternalModule(SpeedTestPackageModule),
     // Other external modules
     // ...
   ],

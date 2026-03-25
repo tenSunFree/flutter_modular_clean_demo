@@ -21,6 +21,7 @@ import 'package:profile/profile.dart' as _i16;
 import 'package:root/core/di/injection_module.dart' as _i352;
 import 'package:root/core/event/app_event_listener.dart' as _i332;
 import 'package:session/session.dart' as _i332;
+import 'package:speed_test/speed_test.dart' as _i792;
 import 'package:storage/storage.dart' as _i431;
 import 'package:theming/theming.dart' as _i370;
 
@@ -39,6 +40,7 @@ extension GetItInjectableX on _i174.GetIt {
     await _i671.AppShellPackageModule().init(gh);
     await _i548.AnalyticsPackageModule().init(gh);
     await _i522.FirebasePackageModule().init(gh);
+    await _i792.SpeedTestPackageModule().init(gh);
     final injectionModule = _$InjectionModule();
     gh.singleton<_i372.NetworkInfo>(() => injectionModule.networkInfo);
     gh.singleton<_i332.AppEventListener>(() => _i332.AppEventListener());

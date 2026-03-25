@@ -1,0 +1,30 @@
+name: speed_test
+description: "Infrastructure layer for speed testing"
+version: 1.0.0
+publish_to: 'none'
+resolution: workspace
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  core:
+    path: ../../shared/core
+  injectable: ^2.5.0
+  get_it: ^8.2.0
+  http: ^1.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  mocktail: ^1.0.4
+
+  # Code Generation
+  build_runner: any
+
+  # DI Generator
+  injectable_generator: any

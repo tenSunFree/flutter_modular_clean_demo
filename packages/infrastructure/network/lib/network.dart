@@ -17,13 +17,18 @@ export 'package:dio/dio.dart'
 
 // Client exports
 export 'src/client/client.dart';
+
 // Connectivity exports
 export 'src/connectivity/connectivity.dart';
+
 // Exception exports
 export 'src/exceptions/exceptions.dart';
+
 // Interceptor exports
 export 'src/interceptors/interceptors.dart';
+
 // Model exports
 export 'src/models/models.dart';
+
 // Utility exports
 export 'src/utils/utils.dart';
